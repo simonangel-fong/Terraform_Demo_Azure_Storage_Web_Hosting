@@ -1,0 +1,7 @@
+# Usage: terraform -chdir=infra init -backend-config=backend.hcl
+
+resource_group_name  = "rg_name"
+storage_account_name = "sa_name"
+container_name       = "con_name"
+key                  = "project.env.tfstate"
+use_azuread_auth     = true
