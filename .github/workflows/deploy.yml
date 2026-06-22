@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write   # required for Azure OIDC
+  id-token: write # required for Azure OIDC
   contents: read
 
 env:
@@ -48,7 +48,9 @@ jobs:
             -backend-config="resource_group_name=${{ secrets.TFSTATE_RG }}" \
             -backend-config="storage_account_name=${{ secrets.TFSTATE_SA }}" \
             -backend-config="container_name=${{ secrets.TFSTATE_CONTAINER }}" \
-            -backend-config="key=demo-storage-web-hosting/dev/tfstate"
+            -backend-config="key=demo-storage-web-hosting/dev/tfstate" \
+            -backend-config="use_oidc=true" \
+            -backend-config="use_azuread_auth=true"
 
       # - name: Terraform fmt
       #   run: terraform fmt -check -recursive
