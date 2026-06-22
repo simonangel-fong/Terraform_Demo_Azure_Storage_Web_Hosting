@@ -69,7 +69,7 @@ az storage account show -n demostoragewebhost
 
 ---
 
-### Phase 4 — CDN + Cloudflare
+### Phase 4 — CDN + Cloudflare (skip)
 
 - Add Azure CDN or Front Door in front of the storage endpoint for HTTPS + caching.
 - Manage Cloudflare DNS via the `cloudflare` provider: `CNAME` record → CDN/Front Door hostname.

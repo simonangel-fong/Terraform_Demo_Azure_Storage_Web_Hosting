@@ -7,7 +7,7 @@ locals {
   project  = "demo-storage-web-host"
   location = "canadacentral"
 
-  name = "${local.project}-${var.env}"
+  name            = "${local.project}-${var.env}"
   storage_sa_name = "demostoragewebhost"
   default_tags = {
     project     = local.project
