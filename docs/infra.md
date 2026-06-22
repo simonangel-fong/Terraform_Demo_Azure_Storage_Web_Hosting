@@ -24,3 +24,16 @@ terraform -chdir=infra destroy -auto-approve
 ---
 
 ## Confirm via Azure CLI
+
+```sh
+az group list --query "[?contains(name, 'demo-storage-web-host-dev')]" --output table
+# Name                       Location
+# -------------------------  -------------
+# demo-storage-web-host-dev  canadacentral
+
+az storage account show --name demostoragewebhost --resource-group 'demo-storage-web-host-dev' --query "name" --output table
+# Result
+# ------------------
+# demostoragewebhost
+
+```
