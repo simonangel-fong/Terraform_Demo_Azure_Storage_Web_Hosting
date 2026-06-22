@@ -1,15 +1,5 @@
 # outputs.tf
 
-output "resource_group_name" {
-  description = "Name of the resource group."
-  value       = azurerm_resource_group.main.name
-}
-
-output "storage_account_name" {
-  description = "Name of the storage account hosting the static site."
-  value       = azurerm_storage_account.web.name
-}
-
 output "primary_web_endpoint" {
   description = "Public HTTPS endpoint of the static website."
   value       = azurerm_storage_account.web.primary_web_endpoint

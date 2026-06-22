@@ -48,18 +48,18 @@ jobs:
             -backend-config="resource_group_name=${{ secrets.TFSTATE_RG }}" \
             -backend-config="storage_account_name=${{ secrets.TFSTATE_SA }}" \
             -backend-config="container_name=${{ secrets.TFSTATE_CONTAINER }}" \
-            -backend-config="key=demo-storage-web-hosting/dev/tfstate" \
+            -backend-config="key=${{ vars.APP_NAME }}/${{ vars.ENV }}/tfstate" \
             -backend-config="use_oidc=true" \
             -backend-config="use_azuread_auth=true"
 
-      # - name: Terraform fmt
-      #   run: terraform fmt -check -recursive
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive
 
-      # - name: Terraform validate
-      #   run: terraform validate
+      - name: Terraform validate
+        run: terraform validate
 
-      # - name: Terraform plan
-      #   run: terraform plan -out=tfplan -input=false
+      - name: Terraform plan
+        run: terraform plan -out=tfplan -input=false
 
-      # - name: Terraform apply
-      #   run: terraform apply -auto-approve -input=false tfplan
+      - name: Terraform apply
+        run: terraform apply -auto-approve -input=false tfplan
