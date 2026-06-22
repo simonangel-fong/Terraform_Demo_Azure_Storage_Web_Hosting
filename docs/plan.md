@@ -61,9 +61,15 @@ infra/                   # terraform code
 - `az storage blob list -c '$web' --account-name <name>` — files present.
 - Browser: open `primary_web_endpoint` output → site loads, 404 page works.
 
+```sh
+# confirm sa
+az storage account show -n demostoragewebhost
+
+```
+
 ---
 
-### Phase 4 — CDN + Cloudflare (Optional)
+### Phase 4 — CDN + Cloudflare
 
 - Add Azure CDN or Front Door in front of the storage endpoint for HTTPS + caching.
 - Manage Cloudflare DNS via the `cloudflare` provider: `CNAME` record → CDN/Front Door hostname.
