@@ -82,7 +82,7 @@ RG_NAME=$(echo -n "demo-storage-web-host-dev" | tr -d '\r') && echo $RG_NAME
 SA_NAME=$(echo -n "demostoragewebhost" | tr -d '\r') && echo $SA_NAME
 
 
-# app role
+# Assign Contributor role to application
 az role assignment create \
   --assignee "$APP_ID" \
   --role "Storage Blob Data Contributor" \
@@ -103,16 +103,40 @@ APP_ID=$(az ad app list --display-name "$APP_NAME" --query "[].appId" -o tsv | t
 # Service Principal id
 SP_OBJECT_ID=$(az ad sp show --id "$APP_ID" --query id -o tsv | tr -d '\r' | xargs) && echo $SP_OBJECT_ID
 
+# resource group name
+RG_NAME=$(echo -n "demo-storage-web-host-dev" | tr -d '\r') && echo $RG_NAME
+
 # TF Resource Group
 TF_RG_NAME=$(echo -n "rg-tfstate-ca" | tr -d '\r') && echo $TF_RG_NAME
 # TF Storage Account
 TF_SA_NAME=$(echo -n "tfstatesf7592" | tr -d '\r') && echo $TF_SA_NAME
 
+# ######################################################################
+# Assign Contributor role to GitHub Actions to access TF storage
+# ######################################################################
+# Storage Blob Data Contributor
 az role assignment create \
   --assignee-object-id "$SP_OBJECT_ID" \
   --assignee-principal-type ServicePrincipal \
   --role "Storage Blob Data Contributor" \
   --scope "/subscriptions/$SUB_ID/resourceGroups/$TF_RG_NAME/providers/Microsoft.Storage/storageAccounts/$TF_SA_NAME"
+
+# ######################################################################
+# Assign Contributor role to GitHub Actions to access Resource Group
+# ######################################################################
+# Contributor: read RG + create SA, blobs, etc.
+az role assignment create \
+  --assignee-object-id "$SP_OBJECT_ID" \
+  --assignee-principal-type ServicePrincipal \
+  --role "Contributor" \
+  --scope "/subscriptions/$SUB_ID/resourceGroups/$RG_NAME"
+
+# Storage Blob Data Contributor: needed later when TF uploads files to $web
+az role assignment create \
+  --assignee-object-id "$SP_OBJECT_ID" \
+  --assignee-principal-type ServicePrincipal \
+  --role "Storage Blob Data Contributor" \
+  --scope "/subscriptions/$SUB_ID/resourceGroups/$RG_NAME"
 
 ```
 
